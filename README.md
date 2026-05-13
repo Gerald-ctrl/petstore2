@@ -84,3 +84,15 @@ This project was built using [Spec-kit](https://speckit.org) — a Spec-Driven D
 2. **Spec** — `.specify/spec.md` — what we're building
 3. **Plan** — `.specify/plan.md` — technical design
 4. **Tasks** — `.specify/tasks.md` — ordered implementation checklist
+
+---
+
+## Deployment (Render)
+
+This project is configured for deployment on **Render** via Blueprint:
+
+1. Connect your GitHub repository to Render.
+2. Render will automatically detect the `render.yaml` file.
+3. Click **"Apply"** to provision the Postgres database and start the backend/frontend services.
+4. **Note**: After the first deployment, you may need to update the frontend API proxy destination in `render.yaml` to match your backend's actual URL.
+
