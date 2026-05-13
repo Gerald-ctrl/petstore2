@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: petstore-db
+    environment:
+      POSTGRES_DB: petstore
+      POSTGRES_USER: petstore
+      POSTGRES_PASSWORD: petstore123
+    ports:
+      - "5432:5432"
+    volumes:
+      - petstore_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U petstore -d petstore"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  petstore_data:
