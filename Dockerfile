@@ -1,10 +1,8 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY .mvn/ .mvn/
-COPY mvnw .
 COPY backend/pom.xml backend/pom.xml
 COPY backend/src/ backend/src/
-RUN chmod +x mvnw && ./mvnw clean package -f backend/pom.xml -DskipTests
+RUN mvn clean package -f backend/pom.xml -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
