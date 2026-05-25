@@ -1,12 +1,11 @@
 services:
-  # Backend Service
+  # Backend Service (Docker-based for Java)
   - type: web
     name: petstore-backend
-    env: java
+    runtime: docker
     region: singapore
     plan: free
-    buildCommand: ./mvnw clean install -f backend/pom.xml -DskipTests
-    startCommand: java -jar backend/target/petstore-backend-1.0.0.jar
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
@@ -22,19 +21,20 @@ services:
           property: password
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
+      - key: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+        value: org.hibernate.dialect.PostgreSQLDialect
 
-  # Frontend Service
+  # Frontend Service (Static Site — no region allowed)
   - type: web
     name: petstore-frontend
     env: static
-    region: singapore
     plan: free
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://petstore-backend.onrender.com/api
     routes:
-      - type: rewrite
-        source: /api/*
-        destination: https://petstore-backend.onrender.com/api/*
       - type: rewrite
         source: /*
         destination: /index.html
