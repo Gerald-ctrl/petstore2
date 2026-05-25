@@ -4,7 +4,6 @@ services:
     name: petstore-backend
     runtime: docker
     region: singapore
-    plan: free
     dockerfilePath: ./Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
@@ -24,11 +23,10 @@ services:
       - key: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
         value: org.hibernate.dialect.PostgreSQLDialect
 
-  # Frontend Service (Static Site — no region allowed)
+  # Frontend Service (Static Site)
   - type: web
     name: petstore-frontend
     env: static
-    plan: free
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
     envVars:
@@ -42,4 +40,3 @@ services:
 databases:
   - name: petstore-db
     region: singapore
-    plan: free
