@@ -7,24 +7,10 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: SPRING_DATASOURCE_URL
-        fromDatabase:
-          name: petstore-db
-          property: connectionString
-      - key: SPRING_DATASOURCE_USERNAME
-        fromDatabase:
-          name: petstore-db
-          property: user
-      - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: petstore-db
-          property: password
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
-      - key: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
-        value: org.hibernate.dialect.PostgreSQLDialect
 
-  # Frontend Service (Static Site — always free, no plan field needed)
+  # Frontend Service (Static Site)
   - type: web
     name: petstore-frontend
     env: static
@@ -37,8 +23,3 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-
-databases:
-  - name: petstore-db
-    region: singapore
-    plan: free
